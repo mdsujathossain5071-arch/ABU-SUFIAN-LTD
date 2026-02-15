@@ -296,9 +296,8 @@
        <div class="sidebar-menu">
         <a href="#" class="menu-item" onclick="switchPage('home-page')"><i class="fa fa-home"></i> Home <i class="fa fa-chevron-right arrow"></i></a>
         <a href="#" class="menu-item"><i class="fa fa-user"></i> Profile Settings  <i class="fa fa-chevron-right arrow"></i></a>
-        <a href="#" class="menu-item"><i class="fa fa-list-ul"></i> Transaction <i class="fa fa-chevron-right arrow"></i></a>
         <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa-solid fa-wallet"></i> Add Money <i class="fa fa-chevron-right arrow"></i></a>
-       <a href="#" class="menu-item" onclick="switchPage('withdraw-page')"><i class="fa-solid fa-file-invoice-dollar"></i> Withdraw Balance <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item" onclick="switchPage('withdraw-page')"><i class="fa-solid fa-file-invoice-dollar"></i> Withdraw Balance <i class="fa fa-chevron-right arrow"></i></a>
         <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa-solid fa-headset"></i> Admin Message <i class="fa fa-chevron-right arrow"></i></a>
         <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa fa-info-circle"></i> Company Ruls <i class="fa fa-chevron-right arrow"></i></a>
         <a href="#" class="menu-item logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i>Log Out<i class="fa fa-chevron-right arrow"></i></a>
@@ -437,7 +436,6 @@
     <div class="wallet-header">
         <div class="header-top">
             <i class="fa fa-chevron-left" onclick="switchPage('home-page', document.querySelector('.nav-link:first-child'))"></i>
-            <h3>My Wallet</h3>
             <i class="fa fa-history" onclick="showWorkProgress()"></i>
         </div>
         <p class="current-bal-label">Current Balance</p>
@@ -455,7 +453,7 @@
             </div>
             </div>
             <div id="withdraw-page" class="page">
-    <div style="background: #e91e63; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="background: #25D366; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
         <i class="fa fa-arrow-left" onclick="switchPage('home-page')" style="cursor:pointer"></i>
         <h3 style="font-weight: 600;">Withdraw</h3>
         <i class="fa fa-history" onclick="showWorkProgress()" style="cursor:pointer"></i>
@@ -475,11 +473,6 @@
             <div style="border: 2px solid #4361ee; border-radius: 12px; padding: 12px; display: flex; align-items: center; margin-bottom: 15px;">
                 <i class="fa-solid fa-circle-dollar-to-slot" style="color: #e91e63; font-size: 20px; margin-right: 10px;"></i>
                 <input type="number" id="withdraw-amount" placeholder="পরিমাণ (টাকা)" style="border: none; outline: none; width: 100%; font-size: 16px; font-weight: 600;">
-            </div>
-
-            <div style="background: #fdf0f4; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; margin-bottom: 20px;">
-                <span style="color: #666; font-size: 14px;">সার্ভিস চার্জ (3.0%)</span>
-                <span style="font-weight: bold;">৳ 0.00</span>
             </div>
 
             <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px;">
