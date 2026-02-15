@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABU SUFIAN LTD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <style>
+    .method-card.selected {
+    border-color: #e91e63 !important;
+    background-color: #fff0f3;
+}
+    /* স্লাইডার মেইন স্টাইল */
+.sidebar {
+    height: 100%;
+    width: 0; /* শুরুতে বন্ধ থাকবে */
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.4s;
+    box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+}
+
+/* স্লাইডার ওপেন হলে ৩২০পিএক্স চওড়া হবে */
+.sidebar.open {
+    width: 320px;
+}
+
+/* ওভারলে (অন্ধকার ব্যাকগ্রাউন্ড) */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1999;
+}
+
+/* হেডার সেকশন (হলুদ অংশ) */
+.sidebar-header {
+    background: #25D366; /* স্ক্রিনশটের হলুদ কালার */
+    padding: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.close-btn {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* প্রোফাইল ইমেজ এরিয়াতে লোগো আইকন */
+.profile-img-container {
+    width: 85px;
+    height: 85px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    border: 3px solid rgba(0,0,0,0.1);
+}
+.profile-img-container i {
+    font-size: 45px;
+    color: #e91e63;
+}
+
+.user-profile h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.verify-icon {
+    color: blue;
+    font-size: 14px;
+}
+
+.user-profile p {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.affiliate-box {
+    background: rgba(0,0,0,0.05);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* মেনু লিস্ট স্টাইল */
+.sidebar-menu {
+    padding-top: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #444;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #f1f1f1;
+    transition: 0.2s;
+}
+
+.menu-item i:first-child {
+    width: 30px;
+    font-size: 18px;
+}
+
+.menu-item .arrow {
+    margin-left: auto;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.menu-item:active {
+    background: #f9f9f9;
+}
+
+.logout {
+    color: #e74c3c;
+}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f4f7f6; color: #333; overflow-x: hidden; padding-bottom: 80px; }
+
+        .page { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Auth UI Design */
+        .auth-container { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; background: #f8f9fc; }
+        .auth-logo { width: 100px; height: 100px; background: #25D366; border-radius: 30px; display: flex; align-items: center; justify-content: center; color: white; font-size: 50px; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2); }
+        .auth-header { text-align: center; margin-bottom: 30px; }
+        .auth-header h1 { font-size: 26px; font-weight: 800; color: #1a1a1a; margin-bottom: 8px; }
+        .auth-header p { color: #777; font-size: 15px; }
+        .auth-card { background: white; width: 100%; max-width: 380px; padding: 30px 25px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.06); }
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #333; margin-left: 5px; }
+        .input-box { position: relative; display: flex; align-items: center; background: #f9f9f9; border-radius: 18px; padding: 0 18px; border: 1px solid #eee; transition: 0.3s; }
+        .input-box:focus-within { border-color: #25D366; background: #fff; box-shadow: 0 0 10px rgba(233, 30, 99, 0.05); }
+        .input-box i:not(.toggle-pass) { color: #25D366; font-size: 18px; width: 30px; }
+        .input-box input { border: none; background: transparent; padding: 15px 10px; width: 100%; outline: none; font-size: 15px; color: #333; }
+        .toggle-pass { color: #bbb; cursor: pointer; padding: 10px; }
+        .forgot-pass { text-align: right; margin-top: 10px; }
+        .forgot-pass a { color: #25D366; text-decoration: none; font-size: 13px; font-weight: 700; }
+        .btn-auth { width: 100%; background: #25D366; color: white; border: none; padding: 16px; border-radius: 18px; font-weight: 700; font-size: 17px; margin-top: 25px; cursor: pointer; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3); transition: 0.3s; }
+        .btn-auth:active { transform: scale(0.97); }
+        .auth-footer { margin-top: 35px; font-size: 15px; color: #666; text-align: center; }
+        .auth-footer span { color: #25D366; font-weight: 800; cursor: pointer; text-decoration: underline; }
+
+        /* --- HOME PAGE STYLES --- */
+        .top-bar { background: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        .brand-name { color: #25D366; font-weight: 800; font-size: 18px; letter-spacing: 1px; }
+        .main-banner { margin: 15px; background: linear-gradient(135deg, #25D366, #25D366); height: 150px; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; text-align: center; box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3); }
+        .main-banner h2 { font-size: 20px; font-weight: 600; }
+        .social-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px 15px; text-align: center; }
+        .social-item { cursor: pointer; }
+        .social-item i { font-size: 22px; margin-bottom: 5px; display: block; }
+        .social-item span { font-size: 11px; color: #666; font-weight: 500; }
+        .section-header { background: linear-gradient(to right, #25D366, #25D366); color: white; margin: 10px; padding: 3px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 14px; }
+        .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 15px; }
+        .service-card { background: #fff; padding: 15px 5px; border-radius: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; transition: transform 0.2s; cursor: pointer; }
+        .service-card:active { transform: scale(0.95); }
+        .service-card i { font-size: 24px; margin-bottom: 8px; }
+        .service-card p { font-size: 11px; font-weight: 600; color: #444; }
+
+        /* --- WALLET PAGE STYLES --- */
+        .wallet-header { background: linear-gradient(135deg, #25D366, #25D366); color: white; padding: 30px 20px 50px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; text-align: center; }
+        .current-bal-label { font-size: 14px; opacity: 0.9; margin-bottom: 8px; }
+        .balance-val { font-size: 48px; font-weight: 800; margin-bottom: 10px; }
+        .list-container { padding: 25px 15px; margin-top: -30px; }
+        .income-title { font-size: 18px; font-weight: bold; color: #333; margin: 20px 0 15px 5px; }
+        .list-card { background: white; padding: 16px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
+        .list-info { display: flex; align-items: center; gap: 15px; }
+        .icon-sq { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .bg-pink-light { background: #fceef3; color: #d81b60; }
+        .bg-blue-light { background: #eef2fc; color: #4361ee; }
+        .bg-green-light { background: #eefcf4; color: #06d6a0; }
+        .bg-orange-light { background: #fcf6ee; color: #ff9f1c; }
+        .list-text p { font-size: 12px; color: #888; margin-bottom: 2px; }
+        .list-text b { font-size: 16px; color: #222; font-weight: 700; }
+
+        /* --- BOTTOM NAV --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: none; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 1000; }
+        .nav-link { text-decoration: none; color: #999; text-align: center; font-size: 11px; flex: 1; cursor: pointer; transition: 0.3s; }
+        .nav-link.active { color: #25D366; }
+        .nav-link i { font-size: 22px; margin-bottom: 4px; display: block; }
+
+        /* --- NOTICE MODAL STYLE --- */
+        .notice-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+        .notice-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: zoomIn 0.3s ease;
+            text-align: center;
+        }
+        .notice-header {
+            background: #111;
+            padding: 20px;
+            color: white;
+        }
+        .notice-header h2 { font-size: 24px; margin: 0; }
+        .notice-header p { color: #ccff00; margin: 5px 0 0; font-weight: bold; }
+        .notice-body {
+            padding: 20px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .notice-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+        .btn-close-notice {
+            background: #ff5e5e;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<div id="mySidebar" class="sidebar">
+    <div class="sidebar-header">
+        <div class="header-top">
+            <div class="header-logo">
+            </div>
+            <i class="fa fa-times close-btn" onclick="toggleSidebar()"></i>
+        </div>
+        
+        <div class="user-profile">
+            <div class="profile-img-container">
+                <i class="fa fa-user-circle"></i>
+            </div>
+            <h3 id="side-user-name">User Name <i class="fa-solid fa-circle-check verify-icon"></i></h3>
+          <div class="affiliate-box">
+                Business Affiliate Id: <span id="side-affiliate-id">000000</span> <i class="fa-regular fa-copy copy-icon"></i>
+            </div>
+        </div>
+    </div>
+
+       <div class="sidebar-menu">
+        <a href="#" class="menu-item" onclick="switchPage('home-page')"><i class="fa fa-home"></i> Home <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item"><i class="fa fa-user"></i> Profile Settings  <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item"><i class="fa fa-list-ul"></i> Transaction <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa-solid fa-wallet"></i> Add Money <i class="fa fa-chevron-right arrow"></i></a>
+       <a href="#" class="menu-item" onclick="switchPage('withdraw-page')"><i class="fa-solid fa-file-invoice-dollar"></i> Withdraw Balance <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa-solid fa-headset"></i> Admin Message <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item" onclick="showWorkProgress()"><i class="fa fa-info-circle"></i> Company Ruls <i class="fa fa-chevron-right arrow"></i></a>
+        <a href="#" class="menu-item logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i>Log Out<i class="fa fa-chevron-right arrow"></i></a>
+    </div>
+</div>
+
+<div id="noticeModal" class="notice-modal">
+    <div class="notice-content">
+        <div class="notice-header">
+            <div style="background: #ccff00; height: 4px; width: 40px; margin: 0 auto 10px;"></div>
+            <h2>Notice</h2>
+            <p>ABU SUFIAN LTD</p>
+        </div>
+        <div class="notice-body">
+           ABU SUFIAN LTD √আয়ের নতুন সংজ্ঞা💥<br>
+           একটা প্রশ্ন ❓<br>
+           👉 শুধু শিখবেন ,নাকি শিখে সত্যিই আয় করবেন?<br>
+           ABU SUFIAN LTD তৈরি করা হয়েছে তাদের জন্য যারা সময় নষ্ট না করে<br>
+           ✔️ স্কিল শিখতে চাই<br>
+           ✔️ রিয়েল ইনকাম করতে চায়<br>
+           ✔️ আর নিজের ভবিষ্যৎ নিজেই গড়তে চায়<br>
+           💰 30 + প্রমাণিত ইনকাম সুযোগ:<br><br>
+           🔹 Passive income √ কাজ করুক আপনার সিস্টেম<br>
+           🔹 Active income √ পরিশ্রমের সরাসরি ফল<br>
+           🔹 Bonus project √ অতিরিক্ত ইনকামের চমক<br>
+           🔹 Upcoming project √ ভবিষ্যৎ প্রস্তুতির সুযোগ<br><br>
+           📚 এখানে শুধু কথা না 🔹 রিয়েল গাইডলাইন:<br>
+           ✔️ স্টেপ- বাই -স্টেপ শিখানো
+        </div>
+        <div class="notice-footer">
+            <button class="btn-close-notice" onclick="closeNotice()">× বন্ধ করুন</button>
+        </div>
+    </div>
+</div>
+
+<div id="login-page" class="page active">
+    <div class="auth-container">
+        <div class="auth-logo"><i class="fa fa-user"></i></div>
+        <div class="auth-header">
+            <h1>ABU SUFIAN LTD</h1>
+            <p>আপনার অ্যাকাউন্টে লগইন করুন</p>
+        </div>
+        <div class="auth-card">
+            <div class="input-group">
+                <label>ফোন নম্বর</label>
+                <div class="input-box">
+                    <i class="fa fa-mobile-screen-button"></i>
+                    <input type="number" id="login-phone" placeholder="01XXXXXXXXX">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>পাসওয়ার্ড</label>
+                <div class="input-box">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="login-pass" placeholder="........">
+                    <i class="fa fa-eye toggle-pass" onclick="togglePass('login-pass')"></i>
+                </div>
+            </div>
+            <div class="forgot-pass"><a href="#" onclick="showInfo('পাসওয়ার্ড রিসেট করতে অ্যাডমিনের সাথে যোগাযোগ করুন।')">পাসওয়ার্ড ভুলে গেছেন?</a></div>
+            <button class="btn-auth" onclick="handleLogin()">লগইন করুন</button>
+        </div>
+        <div class="auth-footer">অ্যাকাউন্ট নেই? <span onclick="switchPage('signup-page')">রেজিস্ট্রেশন করুন</span></div>
+    </div>
+</div>
+
+<div id="signup-page" class="page">
+    <div class="auth-container">
+        <div class="auth-logo"><i class="fa fa-user-plus"></i></div>
+        <div class="auth-header">
+            <h1>ABU SUFIAN LTD</h1>
+            <p>নতুন অ্যাকাউন্ট তৈরি করুন</p>
+        </div>
+        <div class="auth-card">
+            <div class="input-group">
+                <label>পুরো নাম</label>
+                <div class="input-box"><i class="fa fa-user-tag"></i><input type="text" id="reg-name" placeholder="আপনার নাম"></div>
+            </div>
+            <div class="input-group">
+                <label>ফোন নম্বর (১১ সংখ্যা)</label>
+                <div class="input-box"><i class="fa fa-phone"></i><input type="number" id="reg-phone" placeholder="01XXXXXXXXX"></div>
+            </div>
+            <div class="input-group">
+                <label>পাসওয়ার্ড (কমপক্ষে ৬ সংখ্যা)</label>
+                <div class="input-box">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড">
+                    <i class="fa fa-eye toggle-pass" onclick="togglePass('reg-pass')"></i>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>এফিলিয়েট কোড (ঐচ্ছিক)</label>
+                <div class="input-box"><i class="fa fa-gift"></i><input type="text" id="reg-aff" placeholder="কোড থাকলে দিন"></div>
+            </div>
+            <button class="btn-auth" onclick="handleSignup()">রেজিস্ট্রেশন করুন</button>
+        </div>
+        <div class="auth-footer">অ্যাকাউন্ট আছে? <span onclick="switchPage('login-page')">লগইন করুন</span></div>
+    </div>
+</div>
+
+<div id="home-page" class="page">
+    <div class="top-bar">
+        <i class="fa fa-bars" onclick="toggleSidebar()" style="cursor:pointer"></i>
+        <div class="brand-name">ABU SUFIAN LTD</div>
+        <i class="fa-regular fa-bell" onclick="showNotice()" style="cursor:pointer"></i>
+    </div>
+    <div class="main-banner">
+        <h2>Welcome to, ABU SUFIAN LTD</h2>
+    </div>
+    <div class="social-grid">
+        <div class="social-item" onclick="showWorkProgress()"><i class="fab fa-facebook" style="color: #1877f2;"></i><span>ফেসবুক</span></div>
+        <div class="social-item" onclick="showWorkProgress()"><i class="fab fa-youtube" style="color: #ff0000;"></i><span>ইউটিউব</span></div>
+        <div class="social-item" onclick="showWorkProgress()"><i class="fab fa-telegram" style="color: #0088cc;"></i><span>টেলিগ্রাম</span></div>
+        <div class="social-item" onclick="showWorkProgress()"><i class="fas fa-star" style="color: #ffc107;"></i><span>রিভিউ গ্রুপ</span></div>
+    </div>
+    <div class="section-header">আমাদের প্রজেক্ট সমূহ</div>
+    <div class="service-grid">
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-mobile-alt" style="color: #ff4d4d;"></i><p>মোবাইল রিচার্জ</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-car" style="color: #4361ee;"></i><p>ড্রাইভ প্যাক</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-file-invoice-dollar" style="color: #ffbe0b;"></i><p>পে বিল</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-store" style="color: #06d6a0;"></i><p>রিসেলার শপ</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-globe" style="color: #7209b7;"></i><p>ডিজিটাল সার্ভিস</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-users-cog" style="color: #fb5607;"></i><p>সোশ্যাল সার্ভিস</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-google" style="color: #ea4335;"></i><p>জিমেল সেল</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-telegram-plane" style="color: #24A1DE;"></i><p>টেলিগ্রাম সেল</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullseye" style="color: #ff006e;"></i><p>টার্গেট বোনাস</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-trophy" style="color: #ff9f1c;"></i><p>লিডারশীপ স্কোর</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-money-check-alt" style="color: #2ec4b6;"></i><p>মাসিক বেতন</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-user-friends" style="color: #3a86ff;"></i><p>রেফার ইনকাম</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-facebook-square" style="color: #3b5998;"></i><p>ফেসবুক সেল</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullhorn" style="color: #ef476f;"></i><p>জব পোস্ট</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-briefcase" style="color: #00b4d8;"></i><p>মাইক্রো জব</p></div>
+    </div>
+</div>
+
+<div id="wallet-page" class="page">
+    <div class="wallet-header">
+        <div class="header-top">
+            <i class="fa fa-chevron-left" onclick="switchPage('home-page', document.querySelector('.nav-link:first-child'))"></i>
+            <h3>My Wallet</h3>
+            <i class="fa fa-history" onclick="showWorkProgress()"></i>
+        </div>
+        <p class="current-bal-label">Current Balance</p>
+        <div class="balance-val">৳০.০০</div>
+    </div>
+    <div class="list-container">
+        <div class="list-card"><div class="list-info"><div class="icon-sq bg-pink-light"><i class="fa-solid fa-calendar-day"></i></div><div class="list-text"><p>Today's Income</p><b>৳০.০০</b></div></div></div>
+        <div class="list-card"><div class="list-info"><div class="icon-sq bg-blue-light"><i class="fa-solid fa-history"></i></div><div class="list-text"><p>Yesterday's Income</p><b>৳০.০০</b></div></div></div>
+        <div class="list-card"><div class="list-info"><div class="icon-sq bg-green-light"><i class="fa-solid fa-calendar-week"></i></div><div class="list-text"><p>Last 7 Days Income</p><b>৳০.০০</b></div></div></div>
+        <div class="list-card"><div class="list-info"><div class="icon-sq bg-orange-light"><i class="fa-solid fa-calendar-days"></i></div><div class="list-text"><p>Last 30 Days Income</p><b>৳০.০০</b></div></div></div>
+        <h3 class="income-title">Statistics</h3>
+        <div class="list-card" style="background: #fff5f8; border: 1px solid #d81b6033;">
+            <div class="list-info"><div class="icon-sq" style="background: #d81b60; color: white;"><i class="fa-solid fa-sack-dollar"></i></div><div class="list-text"><p>Total Income</p><b style="color: #d81b60; font-size: 20px;">৳০.০০</b></div></div>
+            </div>
+            </div>
+            </div>
+            <div id="withdraw-page" class="page">
+    <div style="background: #e91e63; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between;">
+        <i class="fa fa-arrow-left" onclick="switchPage('home-page')" style="cursor:pointer"></i>
+        <h3 style="font-weight: 600;">Withdraw</h3>
+        <i class="fa fa-history" onclick="showWorkProgress()" style="cursor:pointer"></i>
+    </div>
+
+    <div style="padding: 20px;">
+        <div style="background: #e91e63; border-radius: 20px; padding: 40px 20px; color: white; position: relative; margin-bottom: 25px; box-shadow: 0 10px 20px rgba(233, 30, 99, 0.2);">
+            <p style="font-size: 14px; opacity: 0.9;">বর্তমান ব্যালেন্স</p>
+            <h1 style="font-size: 45px; margin-top: 10px;">৳০</h1>
+            <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); padding: 15px; border-radius: 15px;">
+                <i class="fa-solid fa-wallet" style="font-size: 30px;"></i>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: 25px; padding: 25px 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            
+            <div style="border: 2px solid #4361ee; border-radius: 12px; padding: 12px; display: flex; align-items: center; margin-bottom: 15px;">
+                <i class="fa-solid fa-circle-dollar-to-slot" style="color: #e91e63; font-size: 20px; margin-right: 10px;"></i>
+                <input type="number" id="withdraw-amount" placeholder="পরিমাণ (টাকা)" style="border: none; outline: none; width: 100%; font-size: 16px; font-weight: 600;">
+            </div>
+
+            <div style="background: #fdf0f4; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <span style="color: #666; font-size: 14px;">সার্ভিস চার্জ (3.0%)</span>
+                <span style="font-weight: bold;">৳ 0.00</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 20px;">
+      <div class="method-card" onclick="selectMethod(this)" style="flex: 1; border: 1px solid #eee; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s;">
+    <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1561631021/bkash_logo.png" style="width: 40px; height: 40px; object-fit: contain; margin-bottom: 5px;" onerror="this.src='https://img.icons8.com/color/96/wallet.png'">
+    <p style="font-size: 11px; font-weight: bold; margin: 0;">বিকাশ</p>
+</div>
+
+<div class="method-card" onclick="selectMethod(this)" style="flex: 1; border: 1px solid #eee; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s;">
+    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8b/Nagad_Logo.svg/1200px-Nagad_Logo.svg.png" style="width: 40px; height: 40px; object-fit: contain; margin-bottom: 5px;" onerror="this.src='https://img.icons8.com/color/96/money-transfer.png'">
+    <p style="font-size: 11px; font-weight: bold; margin: 0;">নগদ</p>
+</div>
+
+<div class="method-card" onclick="selectMethod(this)" style="flex: 1; border: 1px solid #eee; border-radius: 15px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s;">
+    <img src="https://seeklogo.com/images/D/dutch-bangla-rocket-logo-B4D1CC458D-seeklogo.com.png" style="width: 40px; height: 40px; object-fit: contain; margin-bottom: 5px;" onerror="this.src='https://img.icons8.com/color/96/rocket.png'">
+    <p style="font-size: 11px; font-weight: bold; margin: 0;">রকেট</p>
+</div>
+
+                </div>
+            </div>
+
+            <div style="background: #f9f9f9; border-radius: 12px; padding: 12px; display: flex; align-items: center; margin-bottom: 25px; border: 1px solid #ddd;">
+                <i class="fa-solid fa-mobile-screen" style="color: #e91e63; font-size: 20px; margin-right: 10px;"></i>
+                <input type="number" id="withdraw-number" placeholder="মোবাইল/অ্যাকাউন্ট নাম্বার" style="background: transparent; border: none; outline: none; width: 100%; font-size: 15px;">
+            </div>
+
+            <button onclick="handleWithdrawRequest()" style="width: 100%; background: #e91e63; color: white; border: none; padding: 16px; border-radius: 15px; font-size: 18px; font-weight: bold; box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3); cursor: pointer;">
+                উত্তোলন করুন
+            </button>
+
+            <div style="margin-top: 20px; background: #fff9db; border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-circle-info" style="color: #f59f00;"></i>
+                <p style="font-size: 13px; color: #856404; font-weight: 500;">২৪-৪৮ ঘণ্টার মধ্যে পাবেন</p>
+                </div>
+                </div>
+    </div>
+</div>
+ 
+
+<div id="service-page" class="page"><div style="padding: 20px; text-align: center;"><h2>সেবা সার্ভিস পেজ শীঘ্রই আসছে</h2></div></div>
+<div id="chat-page" class="page"><div style="padding: 20px; text-align: center;"><h2>লাইভ চ্যাট সাপোর্ট শীঘ্রই আসছে</h2></div></div>
+
+<nav class="bottom-nav" id="main-nav">
+    <div class="nav-link active" onclick="switchPage('home-page', this)">
+        <i class="fa fa-home"></i><span>হোম</span>
+    </div>
+    <div class="nav-link" onclick="showWorkProgress()">
+        <i class="fa fa-handshake"></i><span>সেবা দিন</span>
+    </div>
+    <div class="nav-link" onclick="switchPage('wallet-page', this)">
+        <i class="fa-solid fa-wallet"></i><span>ওয়ালেট</span>
+    </div>
+    <div class="nav-link" onclick="showWorkProgress()">
+        <i class="fa fa-comments"></i><span>লাইভ চ্যাট</span>
+    </div>
+</nav>
+
+<script>
+    // --- NOTICE LOGIC ---
+    function showNotice() {
+        document.getElementById('noticeModal').style.display = 'flex';
+    }
+    function closeNotice() {
+        document.getElementById('noticeModal').style.display = 'none';
+    }
+
+    // --- AUTH LOGIC (DYNAMIC) ---
+    
+    // Generate 6 Digit Affiliate ID
+    function generateAffiliateID() {
+        return Math.floor(100000 + Math.random() * 900000);
+    }
+
+    // বাটনে কাজ চলছে দেখানোর ফাংশন
+    function showWorkProgress() {
+        Swal.fire({
+            title: 'কাজ চলছে...',
+            text: 'এই সেবাটি শীঘ্রই চালু করা হবে।',
+            icon: 'info',
+            confirmButtonColor: '#e91e63',
+            confirmButtonText: 'ঠিক আছে'
+        });
+    }
+
+    function handleSignup() {
+        const name = document.getElementById('reg-name').value;
+        const phone = document.getElementById('reg-phone').value;
+        const pass = document.getElementById('reg-pass').value;
+
+        if(name === "") { Swal.fire({ icon: 'warning', text: 'আপনার নাম লিখুন' }); return; }
+        if(phone.length !== 11) { Swal.fire({ icon: 'error', text: 'সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন' }); return; }
+        if(pass.length < 6) { Swal.fire({ icon: 'error', text: 'পাসওয়ার্ড কমপক্ষে ৬ সংখ্যার হতে হবে' }); return; }
+
+        let users = JSON.parse(localStorage.getItem('app_users')) || [];
+        let exists = users.find(u => u.phone === phone);
+
+        if(exists) {
+            Swal.fire({ icon: 'error', text: 'এই নম্বর দিয়ে ইতিমধ্যে অ্যাকাউন্ট খোলা হয়েছে!' });
+            return;
+        }
+
+        const newUser = {
+            name: name,
+            phone: phone,
+            password: pass,
+            affiliateId: generateAffiliateID()
+        };
+
+        users.push(newUser);
+        localStorage.setItem('app_users', JSON.stringify(users));
+
+        Swal.fire({ title: 'অ্যাকাউন্ট তৈরি হচ্ছে...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+        
+        setTimeout(() => {
+            Swal.fire({ icon: 'success', title: 'রেজিস্ট্রেশন সফল!', text: 'এখন লগইন করুন।', confirmButtonColor: '#e91e63' })
+            .then(() => switchPage('login-page'));
+        }, 2000);
+    }
+
+    function handleLogin() {
+        const phone = document.getElementById('login-phone').value;
+        const pass = document.getElementById('login-pass').value;
+
+        if(phone.length !== 11) {
+            Swal.fire({ icon: 'error', title: 'উফ!', text: 'সঠিক ১১ সংখ্যার ফোন নম্বর দিন', confirmButtonColor: '#e91e63' });
+            return;
+        }
+
+        let users = JSON.parse(localStorage.getItem('app_users')) || [];
+        let user = users.find(u => u.phone === phone && u.password === pass);
+
+        if(user) {
+            localStorage.setItem('current_user', JSON.stringify(user));
+            updateUserInfoUI(user);
+
+            Swal.fire({ 
+                title: 'লগইন হচ্ছে...', 
+                timer: 1500,
+                showConfirmButton: false,
+                didOpen: () => { Swal.showLoading() } 
+            }).then(() => {
+                switchPage('home-page', document.querySelector('.nav-link:first-child'));
+                // লগইন করার সাথে সাথে নোটিশ পপআপ দেখাবে
+                showNotice();
+            });
+        } else {
+            Swal.fire({ icon: 'error', text: 'ফোন নম্বর অথবা পাসওয়ার্ড ভুল!' });
+        }
+    }
+
+    function updateUserInfoUI(user) {
+        document.getElementById('side-user-name').innerHTML = user.name + ' <i class="fa-solid fa-circle-check verify-icon"></i>';
+        document.getElementById('side-affiliate-id').innerText = user.affiliateId;
+    }
+
+    function handleLogout() {
+        Swal.fire({
+            title: 'লগ আউট করতে চান?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#777',
+            confirmButtonText: 'হ্যাঁ, লগ আউট',
+            cancelButtonText: 'না'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('current_user');
+                location.reload(); // এটি পুরোপুরি রিলোড করে আবার লগইন পেজে নিয়ে যাবে
+            }
+        });
+    }
+
+    function switchPage(pageId, element = null) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById(pageId);
+        if(targetPage) {
+            targetPage.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        const nav = document.getElementById('main-nav');
+        if(pageId === 'login-page' || pageId === 'signup-page') {
+            nav.style.display = 'none';
+        } else {
+            nav.style.display = 'flex';
+        }
+        if(element) {
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            element.classList.add('active');
+        }
+        const sidebar = document.getElementById("mySidebar");
+        if(sidebar.classList.contains("open")) toggleSidebar();
+    }
+
+    function togglePass(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function showInfo(msg) {
+        Swal.fire({ text: msg, confirmButtonColor: '#e91e63', confirmButtonText: 'ঠিক আছে' });
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById("mySidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+        if (sidebar.classList.contains("open")) {
+            sidebar.classList.remove("open");
+            overlay.style.display = "none";
+        } else {
+            sidebar.classList.add("open");
+            overlay.style.display = "block";
+        }
+    }
+
+    window.onload = function() {
+        const loggedUser = JSON.parse(localStorage.getItem('current_user'));
+        if(loggedUser) {
+            updateUserInfoUI(loggedUser);
+            switchPage('home-page', document.querySelector('.nav-link:first-child'));
+            // যদি আগে থেকে লগইন থাকে, তবুও হোমপেজে আসলে নোটিশ দেখাবে
+            showNotice();
+        }
+    }
+
+    // --- উইথড্র মেথড সিলেকশন এবং টেলিগ্রাম বটের ফাংশন ---
+    let selectedMethodName = "";
+
+    function selectMethod(element) {
+        document.querySelectorAll('.method-card').forEach(card => card.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedMethodName = element.querySelector('p').innerText;
+    }
+
+    function handleWithdrawRequest() {
+        const amount = document.getElementById('withdraw-amount').value;
+        const number = document.getElementById('withdraw-number').value;
+        
+        // আপনার দেওয়া বট টোকেন এবং চ্যাট আইডি
+        const botToken = "8385841262:AAFzzGpdfeNkCCq3ZgKUEIdatMiVvPHxDo8";
+        const chatId = "6882504862";
+
+        if (!amount || amount < 100) {
+            Swal.fire('দুঃখিত', 'সর্বনিম্ন ১০০ টাকা উত্তোলন করা যাবে।', 'warning');
+            return;
+        }
+        if (!selectedMethodName) {
+            Swal.fire('দুঃখিত', 'দয়া করে একটি পেমেন্ট মেথড সিলেক্ট করুন।', 'warning');
+            return;
+        }
+        if (number.length < 11) {
+            Swal.fire('দুঃখিত', 'সঠিক মোবাইল নাম্বার প্রদান করুন।', 'warning');
+            return;
+        }
+
+        Swal.fire({ title: 'অনুরোধ পাঠানো হচ্ছে...', didOpen: () => { Swal.showLoading() } });
+
+        const user = JSON.parse(localStorage.getItem('current_user')) || {name: "Unknown"};
+        const message = `🔔 **নতুন উইথড্র অনুরোধ!**\n\n👤 ব্যবহারকারী: ${user.name}\n📞 ফোন: ${user.phone}\n💰 পরিমাণ: ৳${amount}\n💳 মেথড: ${selectedMethodName}\n🔢 নাম্বার: ${number}`;
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
+        })
+        .then(res => {
+            if (res.ok) {
+                Swal.fire('সফল!', 'আপনার উত্তোলনের অনুরোধটি গ্রহণ করা হয়েছে।', 'success')
+                .then(() => switchPage('home-page'));
+            } else {
+                Swal.fire('ত্রুটি', 'অনুরোধ পাঠানো সম্ভব হয়নি। দয়া করে পরে চেষ্টা করুন।', 'error');
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
