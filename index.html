@@ -307,7 +307,7 @@
 <div id="noticeModal" class="notice-modal">
     <div class="notice-content">
         <div class="notice-header">
-            <div style="background: #ccff00; height: 4px; width: 40px; margin: 0 auto 10px;"></div>
+            <div style="background: #25D366; height: 4px; width: 40px; margin: 0 auto 10px;"></div>
             <h2>Notice</h2>
             <p>ABU SUFIAN LTD</p>
         </div>
@@ -338,18 +338,18 @@
         <div class="auth-logo"><i class="fa fa-user"></i></div>
         <div class="auth-header">
             <h1>ABU SUFIAN LTD</h1>
-            <p>আপনার অ্যাকাউন্টে লগইন করুন</p>
+            <p>Login your Account</p>
         </div>
         <div class="auth-card">
             <div class="input-group">
-                <label>ফোন নম্বর</label>
+                <label>Mobile Number</label>
                 <div class="input-box">
                     <i class="fa fa-mobile-screen-button"></i>
                     <input type="number" id="login-phone" placeholder="01XXXXXXXXX">
                 </div>
             </div>
             <div class="input-group">
-                <label>পাসওয়ার্ড</label>
+                <label>Password</label>
                 <div class="input-box">
                     <i class="fa fa-lock"></i>
                     <input type="password" id="login-pass" placeholder="........">
@@ -357,7 +357,7 @@
                 </div>
             </div>
             <div class="forgot-pass"><a href="#" onclick="showInfo('পাসওয়ার্ড রিসেট করতে অ্যাডমিনের সাথে যোগাযোগ করুন।')">পাসওয়ার্ড ভুলে গেছেন?</a></div>
-            <button class="btn-auth" onclick="handleLogin()">লগইন করুন</button>
+            <button class="btn-auth" onclick="handleLogin()">Login</button>
         </div>
         <div class="auth-footer">অ্যাকাউন্ট নেই? <span onclick="switchPage('signup-page')">রেজিস্ট্রেশন করুন</span></div>
     </div>
@@ -368,19 +368,19 @@
         <div class="auth-logo"><i class="fa fa-user-plus"></i></div>
         <div class="auth-header">
             <h1>ABU SUFIAN LTD</h1>
-            <p>নতুন অ্যাকাউন্ট তৈরি করুন</p>
+            <p>Create New Account</p>
         </div>
         <div class="auth-card">
             <div class="input-group">
-                <label>পুরো নাম</label>
+                <label>Name:</label>
                 <div class="input-box"><i class="fa fa-user-tag"></i><input type="text" id="reg-name" placeholder="আপনার নাম"></div>
             </div>
             <div class="input-group">
-                <label>ফোন নম্বর (১১ সংখ্যা)</label>
+                <label>Mobile Number (11 digit)</label>
                 <div class="input-box"><i class="fa fa-phone"></i><input type="number" id="reg-phone" placeholder="01XXXXXXXXX"></div>
             </div>
             <div class="input-group">
-                <label>পাসওয়ার্ড (কমপক্ষে ৬ সংখ্যা)</label>
+                <label>Password (6 digit)</label>
                 <div class="input-box">
                     <i class="fa fa-lock"></i>
                     <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড">
@@ -388,12 +388,12 @@
                 </div>
             </div>
             <div class="input-group">
-                <label>এফিলিয়েট কোড (ঐচ্ছিক)</label>
+                <label>Business Affiliate Id</label>
                 <div class="input-box"><i class="fa fa-gift"></i><input type="text" id="reg-aff" placeholder="কোড থাকলে দিন"></div>
             </div>
-            <button class="btn-auth" onclick="handleSignup()">রেজিস্ট্রেশন করুন</button>
+            <button class="btn-auth" onclick="handleSignup()">Register</button>
         </div>
-        <div class="auth-footer">অ্যাকাউন্ট আছে? <span onclick="switchPage('login-page')">লগইন করুন</span></div>
+        <div class="auth-footer">I have a account? <span onclick="switchPage('login-page')">লগইন করুন</span></div>
     </div>
 </div>
 
@@ -414,21 +414,21 @@
     </div>
     <div class="section-header">আমাদের প্রজেক্ট সমূহ</div>
     <div class="service-grid">
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-mobile-alt" style="color: #ff4d4d;"></i><p>মোবাইল রিচার্জ</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-car" style="color: #4361ee;"></i><p>ড্রাইভ প্যাক</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-file-invoice-dollar" style="color: #ffbe0b;"></i><p>পে বিল</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-store" style="color: #06d6a0;"></i><p>রিসেলার শপ</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-globe" style="color: #7209b7;"></i><p>ডিজিটাল সার্ভিস</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-users-cog" style="color: #fb5607;"></i><p>সোশ্যাল সার্ভিস</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-google" style="color: #ea4335;"></i><p>জিমেল সেল</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-telegram-plane" style="color: #24A1DE;"></i><p>টেলিগ্রাম সেল</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullseye" style="color: #ff006e;"></i><p>টার্গেট বোনাস</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-trophy" style="color: #ff9f1c;"></i><p>লিডারশীপ স্কোর</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-money-check-alt" style="color: #2ec4b6;"></i><p>মাসিক বেতন</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-user-friends" style="color: #3a86ff;"></i><p>রেফার ইনকাম</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-facebook-square" style="color: #3b5998;"></i><p>ফেসবুক সেল</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullhorn" style="color: #ef476f;"></i><p>জব পোস্ট</p></div>
-        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-briefcase" style="color: #00b4d8;"></i><p>মাইক্রো জব</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-mobile-alt" style="color: #ff4d4d;"></i><p>Mobile Recherche</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-car" style="color: #4361ee;"></i><p>Drive Offer</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-file-invoice-dollar" style="color: #ffbe0b;"></i><p>Pay Bill</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-store" style="color: #06d6a0;"></i><p>Resseler Product</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-globe" style="color: #7209b7;"></i><p>Digital Service</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-users-cog" style="color: #fb5607;"></i><p>Social Service</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-google" style="color: #ea4335;"></i><p>Gmail Sell</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-telegram-plane" style="color: #24A1DE;"></i><p>Telegram Sell</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullseye" style="color: #ff006e;"></i><p>Terget Bonus</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-trophy" style="color: #ff9f1c;"></i><p>Leadership</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-money-check-alt" style="color: #2ec4b6;"></i><p>Monthly Sellery</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-user-friends" style="color: #3a86ff;"></i><p>Refer Earn</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fab fa-facebook-square" style="color: #3b5998;"></i><p>Facebook Sell</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-bullhorn" style="color: #ef476f;"></i><p>Job Post</p></div>
+        <div class="service-card" onclick="showWorkProgress()"><i class="fas fa-briefcase" style="color: #00b4d8;"></i><p>Micro Job</p></div>
     </div>
 </div>
 
